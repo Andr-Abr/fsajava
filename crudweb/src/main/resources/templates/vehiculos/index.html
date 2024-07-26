@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Vehículos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Lista de Vehículos</h1>
+        
+        <div th:if="${param.success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            Operación realizada con éxito.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+        <a href="/vehiculos/agregar" class="btn btn-primary mb-3">Agregar Vehículo</a>
+        
+        <div th:if="${#lists.isEmpty(vehiculos)}" class="alert alert-info">
+            No hay vehículos registrados.
+        </div>
+        
+        <table th:if="${not #lists.isEmpty(vehiculos)}" class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th><a class="text-white text-decoration-none" th:href="@{/vehiculos(ordenarPor='idVehiculos', direccion=${ordenarPor == 'idVehiculos' && direccion == 'asc' ? 'desc' : 'asc'})}">ID<span th:if="${ordenarPor == 'idVehiculos'}" th:text="${direccion == 'asc' ? '▲' : '▼'}"></span></a></th>
+                    <th><a class="text-white text-decoration-none" th:href="@{/vehiculos(ordenarPor='marca', direccion=${ordenarPor == 'marca' && direccion == 'asc' ? 'desc' : 'asc'})}">Marca<span th:if="${ordenarPor == 'marca'}" th:text="${direccion == 'asc' ? '▲' : '▼'}"></span></a></th>
+                    <th><a class="text-white text-decoration-none" th:href="@{/vehiculos(ordenarPor='modelo', direccion=${ordenarPor == 'modelo' && direccion == 'asc' ? 'desc' : 'asc'})}">Modelo<span th:if="${ordenarPor == 'modelo'}" th:text="${direccion == 'asc' ? '▲' : '▼'}"></span></a></th>
+                    <th><a class="text-white text-decoration-none" th:href="@{/vehiculos(ordenarPor='anio', direccion=${ordenarPor == 'anio' && direccion == 'asc' ? 'desc' : 'asc'})}">Año<span th:if="${ordenarPor == 'anio'}" th:text="${direccion == 'asc' ? '▲' : '▼'}"></span></a></th>
+                    <th><a class="text-white text-decoration-none" th:href="@{/vehiculos(ordenarPor='generacion', direccion=${ordenarPor == 'generacion' && direccion == 'asc' ? 'desc' : 'asc'})}">Generación<span th:if="${ordenarPor == 'generacion'}" th:text="${direccion == 'asc' ? '▲' : '▼'}"></span></a></th>
+                    <th><a class="text-white text-decoration-none" th:href="@{/vehiculos(ordenarPor='motor', direccion=${ordenarPor == 'motor' && direccion == 'asc' ? 'desc' : 'asc'})}">Motor<span th:if="${ordenarPor == 'motor'}" th:text="${direccion == 'asc' ? '▲' : '▼'}"></span></a></th>
+                    <th><a class="text-white text-decoration-none" th:href="@{/vehiculos(ordenarPor='tipoCombustible', direccion=${ordenarPor == 'tipoCombustible' && direccion == 'asc' ? 'desc' : 'asc'})}">Tipo Combustible<span th:if="${ordenarPor == 'tipoCombustible'}" th:text="${direccion == 'asc' ? '▲' : '▼'}"></span></a></th>
+                    <th><a class="text-white text-decoration-none" th:href="@{/vehiculos(ordenarPor='consumoKmL', direccion=${ordenarPor == 'consumoKmL' && direccion == 'asc' ? 'desc' : 'asc'})}">Consumo (Km/L)<span th:if="${ordenarPor == 'consumoKmL'}" th:text="${direccion == 'asc' ? '▲' : '▼'}"></span></a></th>
+                    <th><a class="text-white text-decoration-none" th:href="@{/vehiculos(ordenarPor='tipoTraccion', direccion=${ordenarPor == 'tipoTraccion' && direccion == 'asc' ? 'desc' : 'asc'})}">Tipo Tracción<span th:if="${ordenarPor == 'tipoTraccion'}" th:text="${direccion == 'asc' ? '▲' : '▼'}"></span></a></th>
+                    <th><a class="text-white text-decoration-none" th:href="@{/vehiculos(ordenarPor='tipoCarroceria', direccion=${ordenarPor == 'tipoCarroceria' && direccion == 'asc' ? 'desc' : 'asc'})}">Tipo Carrocería<span th:if="${ordenarPor == 'tipoCarroceria'}" th:text="${direccion == 'asc' ? '▲' : '▼'}"></span></a></th>
+                    <th><a class="text-white text-decoration-none" th:href="@{/vehiculos(ordenarPor='numeroPlazas', direccion=${ordenarPor == 'numeroPlazas' && direccion == 'asc' ? 'desc' : 'asc'})}">Número Plazas<span th:if="${ordenarPor == 'numeroPlazas'}" th:text="${direccion == 'asc' ? '▲' : '▼'}"></span></a></th>
+                    <th>Imagen</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="vehiculo : ${vehiculos}">
+                    <td th:text="${vehiculo.idVehiculos}"></td>
+                    <td th:text="${vehiculo.marca}"></td>
+                    <td th:text="${vehiculo.modelo}"></td>
+                    <td th:text="${vehiculo.anio}"></td>
+                    <td th:text="${vehiculo.generacion}"></td>
+                    <td th:text="${vehiculo.motor}"></td>
+                    <td th:text="${vehiculo.tipoCombustible}"></td>
+                    <td th:text="${vehiculo.consumoKmL}"></td>
+                    <td th:text="${vehiculo.tipoTraccion}"></td>
+                    <td th:text="${vehiculo.tipoCarroceria}"></td>
+                    <td th:text="${vehiculo.numeroPlazas}"></td>
+                    <td>
+                        <img th:if="${vehiculo.rutaImagen}" th:src="${vehiculo.rutaImagen}" alt="Imagen del vehículo" style="max-width: 50px; max-height: 50px;">
+                        <span th:unless="${vehiculo.rutaImagen}">Sin imagen</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/vehiculos/actualizar/{id}(id=${vehiculo.idVehiculos})}" class="btn btn-warning btn-sm">Actualizar</a>
+                        <a th:href="@{/vehiculos/eliminar(idVehiculos=${vehiculo.idVehiculos})}" class="btn btn-danger btn-sm" 
+                           onclick="return confirm('¿Está seguro de eliminar este vehículo?')">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

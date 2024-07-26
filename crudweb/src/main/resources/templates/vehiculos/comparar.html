@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Comparar Vehículos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <!-- Navbar y menú -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img th:src="@{/img/logo.png}" alt="Logo de la aplicación" width="50">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#footer-section">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cuenta-section">Cuenta</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Imagen de inicio -->
+    <div class="container-fluid p-0">
+        <img th:src="@{/img/fondo.jpg}" class="img-fluid" alt="fondoimagen" style="object-fit: cover; width: 100%; height: 65vh;">
+    </div>
+    <!-- Modulo Comparar -->
+    <section id="comparar" class="compare py-5" th:style="'background-image: url(' + @{/img/vs.jpg} + '); background-size: cover; background-position: center;'">
+    <div class="container mt-5">
+    <h1><strong>Comparación de Vehículos</strong></h1>
+    <br>
+    <div class="row compare-content">
+            <div class="col-lg-6 compare-column mb-4" th:each="i : ${#numbers.sequence(1, 2)}">
+            <h4 class="text-dark"><strong>Seleccionar Vehículo [[${i}]]</strong></h4>
+            <div class="search-box mb-3" style="width: 278px;">
+            <input type="text" class="form-control vehiculo-search" placeholder="Buscar vehículo">
+            <div class="search-results" style="display: none;"></div>
+            </div>
+            <div class="card mb-3" style="width: 278px; height: 100px;">
+            <img src="" class="card-img-top" alt="Imagen del vehículo" style="max-width: 278px; max-height: 100px;">
+            </div>
+            <ul class="list-unstyled vehiculo-details">
+            <li>Marca: <span th:text="${vehiculo.marca}"></span></li>
+            <li>Modelo: <span th:text="${vehiculo.modelo}"></span></li>
+            <li>Año: <span th:text="${vehiculo.anio}"></span></li>
+            <li>Generación: <span th:text="${vehiculo.generacion}"></span></li>
+            <li>Motor: <span th:text="${vehiculo.motor}"></span></li>
+            <li>Tipo de combustible: <span th:text="${vehiculo.tipoCombustible}"></span></li>
+            <li>Consumo Km/L-Kw/H: <span th:text="${vehiculo.consumoKmL}"></span></li>
+            <li>Tipo de tracción: <span th:text="${vehiculo.tipoTraccion}"></span></li>
+            <li>Tipo de carrocería: <span th:text="${vehiculo.tipoCarroceria}"></span></li>
+            <li>Número de Plazas: <span th:text="${vehiculo.numeroPlazas}"></span></li>
+            </ul>
+            </div>
+    </div>
+     <div class="text-center mt-4">
+     <a href="/vehiculos/buscar" class="btn btn-primary">Volver a la Búsqueda</a>
+     </div>
+    </div>      
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

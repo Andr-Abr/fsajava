@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados de Búsqueda</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <!-- Navbar y menú -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img th:src="@{/img/logo.png}" alt="Logo de la aplicación" width="50">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#footer-section">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cuenta-section">Cuenta</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Imagen de inicio -->
+    <div class="container-fluid p-0">
+        <img th:src="@{/img/fondo.jpg}" class="img-fluid" alt="fondoimagen" style="object-fit: cover; width: 100%; height: 65vh;">
+    </div>
+    <!-- Modulo Resultados -->
+    <section id="resultados" class="resultados py-5" style="background-color: #59646A">
+    <div class="container mt-5"> 
+        <h1><strong>Resultados de Búsqueda</strong></h1>
+        <br>
+        <div id="resultados">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div th:each="vehiculo : ${vehiculos}" class="col">
+                    <div class="card h-100">
+                        <img th:if="${vehiculo.rutaImagen}" th:src="${vehiculo.rutaImagen}" class="card-img-top" alt="Imagen del vehículo">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${vehiculo.marca + ' ' + vehiculo.modelo}"> </h5>
+                            <p class="card-text" th:text="${'Año: ' + vehiculo.anio}" ></p>
+                            <p class="card-text" th:text="${'Generación: ' + vehiculo.generacion}" ></p>
+                            <p class="card-text" th:text="${'Motor: ' + vehiculo.motor}" ></p>
+                            <p class="card-text" th:text="${'Tipo de combustible: ' + vehiculo.tipoCombustible}" ></p>
+                            <p class="card-text" th:text="${'Consumo Km/L-Kw/H: ' + vehiculo.consumoKmL}" ></p>
+                            <p class="card-text" th:text="${'Tipo de tracción: ' + vehiculo.tipoTraccion}" ></p>
+                            <p class="card-text" th:text="${'Tipo de carrocería: ' + vehiculo.tipoCarroceria}" ></p>
+                            <p class="card-text" th:text="${'Número de Plazas: ' + vehiculo.numeroPlazas}" ></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav aria-label="Page navigation" th:if="${totalPages > 1}">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+                    <a class="page-link" th:href="@{/vehiculos/resultados(page=${currentPage - 1}, size=${size}, sortField=${sortField}, sortDir=${sortDir}, marca=${param.marca}, modelo=${param.modelo}, anio=${param.anio})}">&laquo;</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${currentPage == i ? 'active' : ''}">
+                    <a class="page-link" th:href="@{/vehiculos/resultados(page=${i}, size=${size}, sortField=${sortField}, sortDir=${sortDir}, marca=${param.marca}, modelo=${param.modelo}, anio=${param.anio})}" th:text="${i + 1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1 ? 'disabled' : ''}">
+                    <a class="page-link" th:href="@{/vehiculos/resultados(page=${currentPage + 1}, size=${size}, sortField=${sortField}, sortDir=${sortDir}, marca=${param.marca}, modelo=${param.modelo}, anio=${param.anio})}">&raquo;</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/busqueda.js}"></script>
+</body>
+</html>
